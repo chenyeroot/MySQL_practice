@@ -360,3 +360,33 @@ emp b
 on 
 e.mgr = b.empno； 
 ``` 
+## 17. 列出至少有5个员工的所有部门
+1.先得到所有员工和所属部门
+```
+select
+    e.ename,d.dname
+from 
+    emp as e
+left join
+    dept as d
+on
+    e.deptno = d.deptno;
+```
+2.然后我们就可以得到至少有5个员工的所有部门
+```
+select
+    t.dname,count(*) as person_num
+from 
+    (select
+        e.ename,d.dname
+    from 
+        emp as e
+    left join
+        dept as d
+    on
+        e.deptno = d.deptno) as t
+group by 
+    t.dname
+having
+    person_num >= 5;
+```
