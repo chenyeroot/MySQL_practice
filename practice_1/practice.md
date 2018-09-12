@@ -360,8 +360,8 @@ emp b
 on 
 e.mgr = b.empno； 
 ``` 
-## 17. 列出至少有5个员工的所有部门
-1.先得到所有员工和所属部门
+## 17. 列出至少有5个员工的所有部门名称
+1.先得到所有员工和所属部门名称
 ```
 select
     e.ename,d.dname
@@ -372,7 +372,7 @@ left join
 on
     e.deptno = d.deptno;
 ```
-2.然后我们就可以得到至少有5个员工的所有部门
+2.然后我们就可以得到至少有5个员工的所有部门名称
 ```
 select
     t.dname,count(*) as person_num
