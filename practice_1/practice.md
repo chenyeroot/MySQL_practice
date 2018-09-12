@@ -390,3 +390,60 @@ group by
 having
     person_num >= 5;
 ```
+## 18. 列出薪水比’ALLEN’多的所有员工信息
+1.先找出ALLEN的薪水数额
+```
+select
+    sal
+from 
+    emp
+where
+    ename = "ALLEN";
+```
+2.再找出薪水比’ALLEN’多的所有员工信息
+```
+select
+    *
+from 
+    emp
+where 
+    sal >
+        (select
+            sal
+        from 
+            emp
+        where
+            ename = "ALLEN");
+```
+## 22. 列出薪金高于公司平均薪水的所有员工姓名，所在部门，上级领导，雇员的工资等级    
+1.先求出公司平均薪水
+```
+select
+    avg(sal) as avg_sal
+from
+    emp;
+```
+2.把表emp和表dept和工资等级表salgrade拼接在一起，然后列出薪金高于公司平均薪水的所有员工姓名，所在部门，上级领导，雇员的工资等级
+```
+select
+    d.dname,e.ename,b.ename as leadername,s.grade
+from
+    emp e
+join
+    dept d
+on
+    e.deptno = d.deptno
+left join
+    emp b
+on
+    e.mgr = b.empno
+join
+    salgrade s
+on
+    e.sal between s.losal and s.hisal
+where
+    e.sal > (select
+                avg(sal) as avgsal
+            from
+                emp);
+```
